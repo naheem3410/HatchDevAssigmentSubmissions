@@ -1,65 +1,36 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import MyButton from './button'
 
 
-function App() {
-  const [count, setCount] = useState(0)
-  const [userObject,setUserObject] = useState({email:'',name:'',age:12});
-  const [loginData,setLoginData] = useState({email:'',password:''});
-  const [toggle, setToggle] = useState(true);
-  let num = 10;
-
-  useEffect(()=>{setTimeout(()=>{alert('Welcome')},5000)},[]);
-
-  const handleClick = () =>{
-    //alert(`${loginData.email} ${loginData.password}`);
-    alert('Hi');
-    //setUserObject({...userObject, name:name, age:14});
-
-  }
-  const toggleVisibility = () =>{
-    setToggle(!toggle);
-    console.log(toggle);
-  }
+const App = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [option, setOption] = useState('Select Option');
+    const toggleDropdown = () => {
+      setIsOpen(!isOpen);
+    };
+    const nameOption =(value)=>{
+      setOption(value)
+    }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 2)}>
-          count is {count}
+    <body onClick={()=>{toggleDropdown();nameOption('Select Option')}}>
+    <div className="App">
+      <h1>Dropdown Menu Example</h1>
+      <div className="dropdown">
+        <button onClick={toggleDropdown} className="dropdown-toggle">
+          {option}
         </button>
-        <form action=''>
-          <input type='email' onChange={(old)=>setLoginData({...loginData, email:old.target.value})}/>
-          <input type='password' onChange={(old)=>setLoginData({...loginData, password:old.target.value})}/>
-        </form>
-        <div onCick={()=>handleClick()}>
-          <MyButton textContent={'Submit'}/>
-        </div>
-        <div>
-        {toggle && <p>Toggle My Visibility</p>}
-      <button onClick={toggleVisibility}>Toggle</button>
-    </div>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        {isOpen && (
+          <ul className="dropdown-menu" style={{ listStyleType: 'none', padding: 0 }}>
+            <li onClick={(e)=>{nameOption('Option 1');toggleDropdown();e.stopPropagation()}} style={{ padding: '10px', cursor: 'pointer' }}>Option 1</li>
+            <li onClick={(e)=>{nameOption('Option 2');toggleDropdown();e.stopPropagation()}} style={{ padding: '10px', cursor: 'pointer' }}>Option 2</li>
+            <li onClick={(e)=>{nameOption('Option 3');toggleDropdown();e.stopPropagation()}} style={{ padding: '10px', cursor: 'pointer' }}>Option 3</li>
+          </ul>
+        )}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </div>
+    </body>
+  );
+};
 
 export default App
